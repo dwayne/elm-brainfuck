@@ -1,0 +1,5 @@
+Program ::= (Op | Loop)*
+Op      ::= '>' | '<' | '+' | '-' | '.' | ','
+Loop    ::= '[' (Op | Loop)* ']'
+
+/* Use https://rr.red-dove.com/ui to view it as a Railroad Diagram. */
