@@ -2,6 +2,7 @@ module BF.Data.Machine exposing
     ( Input
     , Machine
     , comma
+    , getByte
     , gt
     , init
     , isZero
@@ -10,6 +11,7 @@ module BF.Data.Machine exposing
     , outputToString
     , period
     , plus
+    , setByte
     )
 
 import BF.Data.Byte as Byte exposing (Byte)
@@ -38,9 +40,19 @@ init rawSize input =
         }
 
 
+getByte : Machine -> Byte
+getByte (Machine { memory }) =
+    Memory.get memory
+
+
+setByte : Byte -> Machine -> Machine
+setByte b (Machine m) =
+    Machine { m | memory = Memory.set b m.memory }
+
+
 isZero : Machine -> Bool
-isZero (Machine { memory }) =
-    Byte.isZero <| Memory.get memory
+isZero =
+    Byte.isZero << getByte
 
 
 gt : Machine -> Machine
