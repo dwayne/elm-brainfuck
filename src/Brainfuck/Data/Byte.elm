@@ -4,6 +4,7 @@ module Brainfuck.Data.Byte exposing
     , fromInt
     , increment
     , isZero
+    , one
     , toChar
     , zero
     )
@@ -16,6 +17,11 @@ type Byte
 zero : Byte
 zero =
     Byte 0
+
+
+one : Byte
+one =
+    Byte 1
 
 
 fromInt : Int -> Byte
