@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@parcel/transformer-elm": "^2.16.4",
+    "parcel": "^2.16.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "@parcel/transformer-elm>elm": "-"
+    }
+  }
+}
