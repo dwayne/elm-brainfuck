@@ -1,8 +1,9 @@
 module Brainfuck.Data.Input exposing
     ( Input
-    , append
+    , Value(..)
     , empty
     , fromInts
+    , fromList
     , fromString
     , readByte
     )
@@ -29,9 +30,27 @@ fromString =
     Input << List.map Byte.fromChar << String.toList
 
 
-append : Input -> Input -> Input
-append (Input a) (Input b) =
-    Input (a ++ b)
+type Value
+    = String String
+    | Char Char
+    | Int Int
+
+
+fromList : List Value -> Input
+fromList =
+    Input
+        << List.concatMap
+            (\value ->
+                case value of
+                    String s ->
+                        List.map Byte.fromChar <| String.toList s
+
+                    Char ch ->
+                        [ Byte.fromChar ch ]
+
+                    Int n ->
+                        [ Byte.fromInt n ]
+            )
 
 
 readByte : Input -> Maybe ( Input, Byte )
