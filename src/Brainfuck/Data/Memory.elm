@@ -2,10 +2,10 @@ module Brainfuck.Data.Memory exposing
     ( Memory
     , decrementByte
     , decrementPtr
+    , empty
     , get
     , incrementByte
     , incrementPtr
-    , init
     , set
     )
 
@@ -20,8 +20,8 @@ type Memory
         }
 
 
-init : Memory
-init =
+empty : Memory
+empty =
     Memory
         { cells = Dict.empty
         , ptr = 0
