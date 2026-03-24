@@ -1,6 +1,7 @@
 module Brainfuck.Data.Byte exposing
     ( Byte
     , decrement
+    , fromChar
     , fromInt
     , increment
     , isZero
@@ -27,6 +28,11 @@ one =
 fromInt : Int -> Byte
 fromInt =
     Byte << modBy 256
+
+
+fromChar : Char -> Byte
+fromChar =
+    fromInt << Char.toCode
 
 
 isZero : Byte -> Bool
