@@ -2,7 +2,7 @@ module Brainfuck.Data.Input exposing
     ( Input
     , append
     , empty
-    , fromBytes
+    , fromInts
     , fromString
     , readByte
     )
@@ -19,9 +19,9 @@ empty =
     Input []
 
 
-fromBytes : List Byte -> Input
-fromBytes =
-    Input
+fromInts : List Int -> Input
+fromInts =
+    Input << List.map Byte.fromInt
 
 
 fromString : String -> Input
