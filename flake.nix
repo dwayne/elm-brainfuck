@@ -1,14 +1,45 @@
 {
-  outputs = { self, nixpkgs, flake-utils }:
+  inputs = {
+    elm2nix = {
+      url = "github:dwayne/elm2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+  };
+
+  outputs = { self, nixpkgs, flake-utils, elm2nix }:
     flake-utils.lib.eachDefaultSystem(system:
       let
+        name = "elm-brainfuck";
+
         pkgs = nixpkgs.legacyPackages.${system};
+        inherit (elm2nix.lib.elm2nix pkgs)
+          buildElmApplication
+          generateRegistryDat
+          prepareElmHomeScript;
+
+        app = pkgs.callPackage ./nix/app.nix {
+          inherit name generateRegistryDat prepareElmHomeScript;
+          version = "0.0.1";
+        };
+
+        serve = pkgs.callPackage ./nix/serve.nix {} {
+          inherit name;
+          root = app;
+        };
+
+        mkApp = { drv, description }: {
+          type = "app";
+          program = "${drv}";
+          meta.description = description;
+        };
       in
       {
         devShells.default = pkgs.mkShell {
-          name = "elm-brainfuck";
+          inherit name;
 
           packages = [
+            elm2nix.packages.${system}.default
             pkgs.elmPackages.elm
             pkgs.elmPackages.elm-format
             pkgs.elmPackages.elm-test
@@ -51,6 +82,24 @@
               echo ""
             fi
           '';
+        };
+
+        packages = {
+          inherit app;
+          default = app;
+        };
+
+        apps = {
+          default = self.apps.${system}.app;
+
+          app = mkApp {
+            drv = serve;
+            description = "Serve the production version of the web application";
+          };
+        };
+
+        checks = {
+          inherit app;
         };
       }
     );

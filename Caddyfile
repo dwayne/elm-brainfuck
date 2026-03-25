@@ -1,0 +1,9 @@
+:{$port}
+
+root * {$root}
+
+try_files {path} /
+
+file_server {
+  browse
+}
