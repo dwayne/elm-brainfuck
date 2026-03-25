@@ -54,6 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
 
     pnpm build src/index.html
     cp -R dist/ "$out"/
+    touch "$out/.nojekyll"
 
     runHook postBuild
   '';

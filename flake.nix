@@ -1,5 +1,11 @@
 {
   inputs = {
+    deploy = {
+      url = "github:dwayne/deploy";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
     elm2nix = {
       url = "github:dwayne/elm2nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -7,7 +13,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, elm2nix }:
+  outputs = { self, nixpkgs, flake-utils, deploy, elm2nix }:
     flake-utils.lib.eachDefaultSystem(system:
       let
         name = "elm-brainfuck";
@@ -27,6 +33,10 @@
           inherit name;
           root = app;
         };
+
+        deployApp = pkgs.writeShellScript "deploy-${name}" ''
+          ${deploy.packages.${system}.default}/bin/deploy "$@" ${app} gh-pages
+        '';
 
         mkApp = { drv, description }: {
           type = "app";
@@ -96,10 +106,15 @@
             drv = serve;
             description = "Serve the production version of the web application";
           };
+
+          deploy = mkApp {
+            drv = deployApp;
+            description = "Deploy the production version of the web application";
+          };
         };
 
         checks = {
-          inherit app;
+          inherit app serve deployApp;
         };
       }
     );
