@@ -1,4 +1,4 @@
-# Brainfuck
+# Brainfuck - [Live Demo](https://dwayne.github.io/elm-brainfuck/)
 
 ![A screenshot of Brainfuck](/screenshot.png)
 
