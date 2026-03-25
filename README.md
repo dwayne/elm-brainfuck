@@ -7,9 +7,9 @@ A [Brainfuck](https://en.wikipedia.org/wiki/Brainfuck) interpreter written in [E
 ## What's interesting about it?
 
 1. It showcases Elm's [data modeling](https://thoughtbot.com/blog/data-modeling-resources-in-elm) capabilities, see [`src/Brainfuck/Data`](./src/Brainfuck/Data).
-2. `Brainfuck.Data.Memory` gives a Brainfuck program unbounded memory.
+2. [`Brainfuck.Data.Memory`](./src/Brainfuck/Data/Memory.elm) gives a Brainfuck program unbounded memory.
 3. It provides an example of using [`elm/parser`](https://package.elm-lang.org/packages/elm/parser/latest/), albeit for a simple grammar. The [Monkey](https://github.com/dwayne/elm-monkey-interpreter) [parser](https://github.com/dwayne/elm-monkey-interpreter/blob/367751ac26ab04cfd8f2cc528641ad975f9e5665/src/Monkey/Parser.elm) was more interesting.
-4. The parser and interpreter are well-tested, see [`Test.Brainfuck.Parser`](./tests/Brainfuck/Parser.elm) and [`Test.Brainfuck.Interpreter`](./tests/Brainfuck/Interpreter.elm).
+4. The parser and interpreter are well-tested, see [`Test.Brainfuck.Parser`](./tests/Test/Brainfuck/Parser.elm) and [`Test.Brainfuck.Interpreter`](./tests/Test/Brainfuck/Interpreter.elm).
 5. The project makes use of [Parcel](https://parceljs.org/) and [Nix](https://nixos.org/). For the Elm transformer I use the Elm compiler from Nix rather than the one installed by `@parcel/transformer-elm`.
 
 ## How was it built?
@@ -23,7 +23,7 @@ I built it bottom-up, iteratively, in 5 parts.
 - From the grammar, I figured out the [AST](./src/Brainfuck/AST.elm)
 - The grammar also guided me in the implementation of the [parser](./src/Brainfuck/Parser.elm)
 
-Finally, I tested the parser, see [`Test.Brainfuck.Parser`](./tests/Brainfuck/Parser.elm).
+Finally, I tested the parser, see [`Test.Brainfuck.Parser`](./tests/Test/Brainfuck/Parser.elm).
 
 ### Part 2 - The runtime system
 
@@ -37,7 +37,7 @@ For this part, I tested all the modules using the `elm repl`.
 ### Part 3 - The interpreter
 
 - I implemented the [interpreter](./src/Brainfuck/Interpreter.elm)
-- I tested the interpreter, see [`Test.Brainfuck.Interpreter`](./tests/Brainfuck/Interpreter.elm)
+- I tested the interpreter, see [`Test.Brainfuck.Interpreter`](./tests/Test/Brainfuck/Interpreter.elm)
 
 ### Part 4 - The UI
 
