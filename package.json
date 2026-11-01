@@ -1,15 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "build": "parcel build src/index.html"
+    "dev": "parcel",
+    "build": "parcel build --public-url ./"
+  },
+  "source": "src/index.html",
+  "staticFiles": {
+    "staticPath": "public"
   },
   "devDependencies": {
+    "@parcel/config-default": "^2.16.4",
     "@parcel/transformer-elm": "^2.16.4",
-    "parcel": "^2.16.4"
-  },
-  "pnpm": {
-    "overrides": {
-      "@parcel/transformer-elm>elm": "-"
-    }
+    "parcel": "^2.16.4",
+    "parcel-reporter-static-files-copy": "^1.5.3"
   }
 }
